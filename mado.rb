@@ -6,6 +6,8 @@ require 'redcarpet'
 require 'haml'
 require 'sinatra/base'
 require 'thin'
+require 'albino'
+require 'nokogiri'
 
 class MadoBase < Sinatra::Base
   get '/' do
@@ -21,7 +23,7 @@ class Mado
   end
 
   # start server
-  def start(filepath, portno, quiet, with_header)
+  def start(filepath, portno, quiet, syntax_highlight, with_header)
     @header_html = with_header ?
     "<div align=\"center\">mado: <strong>#{File.absolute_path(filepath)}</strong><hr></div>\n" : ""
 
@@ -84,9 +86,25 @@ class Mado
     return @header_html unless File.exist?(filepath)
 
     markdown = File.open(filepath).read
+    options =
+      [:fenced_code_blocks => true, :autolink => true]
     html =
-      @header_html + Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(markdown)
+      @header_html + Redcarpet::Markdown.new(Redcarpet::Render::HTML, *options).render(markdown)
+
+    return syntax_highlighting(html)
   end
+end
+
+def syntax_highlighting(html)
+  doc = Nokogiri::HTML(html)
+
+  # xpath = //*[@id="markdown"]/pre/code
+  doc.search("code").each do |code|
+    lang = code.attribute("class").value.intern
+    code.replace(Albino.new(code.text.rstrip, lang).colorize)
+  end
+
+  return doc.to_s
 end
 
 
@@ -94,6 +112,7 @@ end
 portno = 3000
 quiet = false
 with_header = true
+syntax_highlight = false;
 
 if ARGV.length < 1
   STDERR.puts "usage: mado [-p portno] [--no-header] file"
@@ -108,6 +127,8 @@ while ARGV.length > 1
     portno = ARGV.shift.to_i
   when '-q'
     quiet = true
+  when '-s'
+    syntax_highlight = true
   when '--no-header'
     with_header = false
   else
@@ -117,4 +138,4 @@ end
 
 filepath = ARGV.shift
 mado = Mado.new
-mado.start(filepath, portno, quiet, with_header)
+mado.start(filepath, portno, quiet, syntax_highlight, with_header)
