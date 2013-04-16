@@ -23,20 +23,19 @@ class Mado
   end
 
   # start server
-  def start(filepath, portno, quiet, syntax_highlight, with_header)
-    @header_html = with_header ?
-    "<div align=\"center\">mado: <strong>#{File.absolute_path(filepath)}</strong><hr></div>\n" : ""
-
+  def start(filepath, portno, quiet, with_header, highlight)
     Thread.new do
-      observe_file(filepath, quiet)
+      observe_file(filepath, quiet, with_header, highlight)
     end
+
+    @header_html = "<div align=\"center\">mado: <strong>#{File.absolute_path(filepath)}</strong><hr></div>\n"
 
     EventMachine.run do
       EventMachine::WebSocket.start(:host => "0.0.0.0", :port => WS_PORTNO) do |ws|
         ws.onopen {
           puts "#{Time.now} - mado: Connection established!" unless quiet
           sid = @channel.subscribe{ |msg| ws.send msg }
-          send_markdown_html(filepath)
+          send_markdown_html(filepath, with_header, highlight)
 
           ws.onclose {
             @channel.unsubscribe(sid)
@@ -53,7 +52,7 @@ class Mado
 
   private
   # observe file saving every one second, notify if modified
-  def observe_file(filepath, quiet)
+  def observe_file(filepath, quiet, with_header, highlight)
     unless File.exist?(filepath)
       File.open(filepath, "w").puts("")
     end
@@ -66,7 +65,7 @@ class Mado
 
       if mtime != prev_mtime
         puts "#{Time.now} - mado: Refresh view." unless quiet
-        send_markdown_html(filepath)
+        send_markdown_html(filepath, with_header, highlight)
         prev_mtime = mtime
       end
 
@@ -75,33 +74,33 @@ class Mado
   end
 
   # send generated HTML to each client
-  def send_markdown_html(filepath)
-    html = generate_html(filepath)
+  def send_markdown_html(filepath, with_header, highlight)
+    html = generate_html(filepath, with_header, highlight)
 
     @channel.push(html) unless html.nil?
   end
 
   # generate HTML from markdown
-  def generate_html(filepath)
+  def generate_html(filepath, with_header, highlight)
     return @header_html unless File.exist?(filepath)
 
     markdown = File.open(filepath).read
     options =
-      [:fenced_code_blocks => true, :autolink => true]
-    html =
-      @header_html + Redcarpet::Markdown.new(Redcarpet::Render::HTML, *options).render(markdown)
+      [:fenced_code_blocks => true, :autolink => true, :superscript => true]
+    html = Redcarpet::Markdown.new(Redcarpet::Render::HTML, *options).render(markdown)
+    html = @header_html + html if with_header
 
-    return syntax_highlighting(html)
+    return syntax_highlighting(html) if highlight
+    return html
   end
 end
 
 def syntax_highlighting(html)
   doc = Nokogiri::HTML(html)
 
-  # xpath = //*[@id="markdown"]/pre/code
-  doc.search("code").each do |code|
-    lang = code.attribute("class").value.intern
-    code.replace(Albino.new(code.text.rstrip, lang).colorize)
+  doc.search("pre").each do |pre|
+    lang = pre.children.attribute("class").value
+    pre.replace(Albino.new(pre.text.rstrip, lang).colorize)
   end
 
   return doc.to_s
@@ -112,7 +111,7 @@ end
 portno = 3000
 quiet = false
 with_header = true
-syntax_highlight = false;
+highlight = true;
 
 if ARGV.length < 1
   STDERR.puts "usage: mado [-p portno] [--no-header] file"
@@ -127,8 +126,8 @@ while ARGV.length > 1
     portno = ARGV.shift.to_i
   when '-q'
     quiet = true
-  when '-s'
-    syntax_highlight = true
+  when '--no-highlight'
+    highlight = false
   when '--no-header'
     with_header = false
   else
@@ -138,4 +137,4 @@ end
 
 filepath = ARGV.shift
 mado = Mado.new
-mado.start(filepath, portno, quiet, syntax_highlight, with_header)
+mado.start(filepath, portno, quiet, with_header, highlight)
