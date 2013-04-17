@@ -23,7 +23,7 @@ class Mado
   end
 
   # start server
-  def start(filepath, portno, quiet, with_header, highlight)
+  def start(filepath, portno, exec_sinatra, quiet, with_header, highlight)
     Thread.new do
       observe_file(filepath, quiet, with_header, highlight)
     end
@@ -44,7 +44,9 @@ class Mado
         }
       end
 
-      MadoBase.run!(:port => portno)
+      # start HTTP server
+      MadoBase.run!(:port => portno) if exec_sinatra
+
       puts "#{Time.now} - mado: Server started!"
       puts "#{Time.now} - mado: file = #{File.absolute_path(filepath)}"
     end
@@ -107,14 +109,27 @@ def syntax_highlighting(html)
 end
 
 
+USAGE = <<-EOS
+Usage: mado <options> <Markdown file>
+
+Option:
+    -p <port>        specify port number of HTTP Server
+                     default number is 3000
+    -q               quiet mode
+    --no-header      not append header text to html
+    --no-highlight   disable syntax highlight
+    --only-wm        start only WebSocket server
+    --help           show this usage
+EOS
 
 portno = 3000
 quiet = false
 with_header = true
-highlight = true;
+highlight = true
+exec_sinatra = true
 
 if ARGV.length < 1
-  STDERR.puts "usage: mado [-p portno] [--no-header] file"
+  STDERR.puts USAGE
   exit 1
 end
 
@@ -130,6 +145,11 @@ while ARGV.length > 1
     highlight = false
   when '--no-header'
     with_header = false
+  when '--only-ws'
+    exec_sinatra = false
+  # when '--help'
+  #   puts USAGE
+  #   exit 0
   else
     STDERR.puts "invalid option: #{arg}"
   end
@@ -137,4 +157,4 @@ end
 
 filepath = ARGV.shift
 mado = Mado.new
-mado.start(filepath, portno, quiet, with_header, highlight)
+mado.start(filepath, portno, exec_sinatra, quiet, with_header, highlight)
