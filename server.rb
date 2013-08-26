@@ -3,7 +3,7 @@
 
 require 'em-websocket'
 require 'redcarpet'
-require 'haml'
+require 'slim'
 require 'sinatra/base'
 require 'thin'
 require 'albino'
@@ -11,7 +11,7 @@ require 'nokogiri'
 
 class MadoHTTPBase < Sinatra::Base
   get '/' do
-    haml :index
+    slim :index
   end
 end
 
