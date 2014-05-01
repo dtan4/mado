@@ -14,6 +14,8 @@ module Mado
         debug = options[:debug] || false
         markdown = options[:markdown]
 
+        EM.watch_file(markdown, Mado::FileHandler, sockets)
+
         EM::WebSocket.start(host: host, port: 8081, debug: debug) do |ws|
           ws.onopen do
             sockets << ws unless sockets.include?(ws)
@@ -35,6 +37,9 @@ module Mado
         end
 
         Rack::Server.start(app: app, Host: host, Port: port)
+
+        trap("TERM") { EM.stop }
+        trap("INT") { EM.stop }
       end
     end
   end
