@@ -1,4 +1,5 @@
 # Mado
+[![Gem Version](https://badge.fury.io/rb/mado.svg)](http://badge.fury.io/rb/mado)
 
 Realtime [Github Flavored Markdown](https://help.github.com/articles/github-flavored-markdown) Preview with WebSocket
 
