@@ -1,5 +1,5 @@
 $ ->
-  ws = new WebSocket('ws://' + window.location.host + window.location.pathname)
+  ws = new WebSocket("ws://#{window.location.hostname}:8081#{window.location.pathname}")
 
   ws.onmessage = (evt) ->
     $('#markdown').html(evt.data)
