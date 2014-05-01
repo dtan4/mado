@@ -4,6 +4,8 @@ html
     meta charset="utf-8"
     link href="/css/github.css" rel="stylesheet"
     style type="text/css"
+      | .highlight { font-family: Consolas, "Liberation Mono", Courier, monospace; font-size: 12px }
+    style type="text/css"
       = Rouge::Themes::Github.render(scope: ".highlight")
   body
     == yield
