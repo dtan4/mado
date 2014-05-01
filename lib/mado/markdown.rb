@@ -10,8 +10,7 @@ module Mado
 
     def self.convert_markdown(path)
       renderer_options = {
-                          filter_html: true,
-                          hard_wrap: true
+                          filter_html: true
                          }
       convert_options = {
                          autolink: true,
