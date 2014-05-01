@@ -6,18 +6,26 @@ require "pathname"
 
 options = {}
 
-# TODO: show correct usage
-
-argv = OptionParser.new do |opt|
+parser = OptionParser.new("Usage: mado [options] FILE") do |opt|
   opt.on("-p port", "Port number (default: 8080)") { |val| options[:port] = val.to_i }
   opt.on("-o addr", "Address to bind (default: 0.0.0.0)") { |val| options[:host] = val }
   opt.on("--debug", "Debug mode") { |val| options[:debug] = val }
-end.parse(ARGV)
+end
+
+argv = parser.parse(ARGV)
 
 if argv.length < 1
+  puts parser.help
   exit 1
 end
 
-options[:markdown] = Pathname.new(argv.shift).realpath.to_s
+path = argv.shift
+
+begin
+  options[:markdown] = Pathname.new(path).realpath.to_s
+rescue
+  $stderr.puts "mado: File not found - #{path}"
+  exit 1
+end
 
 Mado::Server.run(options)
