@@ -20,6 +20,11 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "sinatra"
   spec.add_dependency "slim"
+  spec.add_dependency "coffee-script"
+  spec.add_dependency "sass"
+  spec.add_dependency "bootstrap-sass"
+  spec.add_dependency "sprockets"
+  spec.add_dependency "sprockets-helpers"
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
