@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Mado::VERSION
   spec.authors       = ["dtan4"]
   spec.email         = ["dtanshi45@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{Realtime Github Flavored Markdown Preview}
+  spec.description   = %q{Realtime Github Flavored Markdown Preview with WebSocket}
+  spec.homepage      = "https://github.com/dtan4/mado"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
