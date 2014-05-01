@@ -1,6 +1,14 @@
 #!/usr/bin/env ruby
 
 require "mado"
+require "optparse"
+
+options = {}
+
+OptionParser.new do |opt|
+  opt.on("-p port", "Port number (default: 8080)") { |val| options[:Port] = val.to_i }
+  opt.on("-o addr", "Address to bind (default: 0.0.0.0)") { |val| options[:Host] = val }
+end.parse!(ARGV.dup)
 
 app = Rack::Builder.app do
   map "/assets" do
@@ -12,6 +20,6 @@ app = Rack::Builder.app do
   end
 end
 
-options = { app: app }
+options[:app] = app
 
 Rack::Server.start(options)
