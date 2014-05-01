@@ -7,8 +7,8 @@ require "pathname"
 options = {}
 
 parser = OptionParser.new("Usage: mado [options] FILE") do |opt|
-  opt.on("-p port", "Port number (default: 8080)") { |val| options[:port] = val.to_i }
-  opt.on("-o addr", "Address to bind (default: 0.0.0.0)") { |val| options[:host] = val }
+  opt.on("-p", "--port=VAL", "Port number (default: 8080)") { |val| options[:port] = val.to_i }
+  opt.on("-a", "--addr=VAL", "Address to bind (default: 0.0.0.0)") { |val| options[:host] = val }
   opt.on("--debug", "Debug mode") { |val| options[:debug] = val }
 end
 
