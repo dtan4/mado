@@ -14,12 +14,13 @@ module Mado
                           hard_wrap: true
                          }
       convert_options = {
-                         autolink:           true,
+                         autolink: true,
                          fenced_code_blocks: true,
-                         lax_spacing:        true,
-                         no_intra_emphasis:  true,
-                         strikethrough:      true,
-                         superscript:        true
+                         lax_spacing: true,
+                         no_intra_emphasis: true,
+                         strikethrough: true,
+                         superscript: true,
+                         tables: true
                         }
       renderer = HTML.new(renderer_options)
       Redcarpet::Markdown.new(renderer, convert_options).render(open(path).read)
