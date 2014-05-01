@@ -5,11 +5,12 @@ require "optparse"
 
 options = {}
 
-OptionParser.new do |opt|
+argv = OptionParser.new do |opt|
   opt.on("-p port", "Port number (default: 8080)") { |val| options[:port] = val.to_i }
   opt.on("-o addr", "Address to bind (default: 0.0.0.0)") { |val| options[:host] = val }
-end.parse!(ARGV.dup)
+  opt.on("--debug", "Debug mode") { |val| options[:debug] = val }
+end.parse(ARGV)
 
-options[:markdown] = ARGV[-1]
+options[:markdown] = argv.shift
 
 Mado::Server.run(options)
