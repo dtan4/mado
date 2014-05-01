@@ -7,7 +7,7 @@ module Mado
     end
 
     def file_modified
-      @sockets.each { |socket| socket.send(convert_markdown) }
+      @sockets.each { |socket| socket.send(convert_markdown) } if File.exist?(path)
     end
 
     def file_moved
@@ -15,7 +15,7 @@ module Mado
     end
 
     def file_deleted
-      @sockets.each { |socket| socket.send(convert_markdown) }
+      @sockets.each { |socket| socket.send(convert_markdown) } if File.exist?(path)
     end
 
     private
