@@ -12,12 +12,13 @@ module Mado
         host = options[:host] || "0.0.0.0"
         port = options[:port] || "8080"
         debug = options[:debug] || false
-        markdown = options[:markdown]
+        markdown_path = options[:markdown]
 
-        EM.watch_file(markdown, Mado::FileHandler, sockets)
+        EM.watch_file(markdown_path, Mado::FileHandler, sockets)
 
         EM::WebSocket.start(host: host, port: 8081, debug: debug) do |ws|
           ws.onopen do
+            ws.send(Mado::Markdown.convert_markdown(markdown_path))
             sockets << ws unless sockets.include?(ws)
           end
 

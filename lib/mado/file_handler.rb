@@ -1,5 +1,4 @@
 require "eventmachine"
-require "github/markup"
 
 module Mado
   class FileHandler < EventMachine::FileWatch
@@ -22,7 +21,7 @@ module Mado
     private
 
     def convert_markdown
-      GitHub::Markup.render(File.join(Dir.pwd, path))
+      Mado::Markdown.convert_markdown(path)
     end
   end
 end
