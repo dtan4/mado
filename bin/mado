@@ -10,12 +10,15 @@ OptionParser.new do |opt|
   opt.on("-o addr", "Address to bind (default: 0.0.0.0)") { |val| options[:Host] = val }
 end.parse!(ARGV.dup)
 
+markdown_path = ARGV[-1]
+
 app = Rack::Builder.app do
   map "/assets" do
     run Mado::App.sprockets
   end
 
   map "/" do
+    Mado::App.set :markdown_path, markdown_path
     run Mado::App
   end
 end
