@@ -1,4 +1,5 @@
 require "eventmachine"
+require "github/markup"
 
 module Mado
   class FileHandler < EventMachine::FileWatch
@@ -7,15 +8,21 @@ module Mado
     end
 
     def file_modified
-      @sockets.each { |socket| socket.send("modified: #{path}") }
+      @sockets.each { |socket| socket.send(convert_markdown) }
     end
 
     def file_moved
-      @sockets.each { |socket| socket.send("moved: #{path}") }
+      # @sockets.each { |socket| socket.send(convert_markdown) }
     end
 
     def file_deleted
-      @sockets.each { |socket| socket.send("deleted: #{path}") }
+      @sockets.each { |socket| socket.send(convert_markdown) }
+    end
+
+    private
+
+    def convert_markdown
+      GitHub::Markup.render(File.join(Dir.pwd, path))
     end
   end
 end
