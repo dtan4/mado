@@ -1,5 +1,5 @@
 $(function(){
-    ws = new WebSocket("ws://localhost:8080");
+    ws = new WebSocket("ws://" + window.location.host + window.location.pathname);
 
     ws.onmessage = function(evt){
         $("#markdown").html(evt.data)
