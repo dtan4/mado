@@ -1,6 +1,6 @@
+require "coffee-script"
 require "sinatra/base"
 require "slim"
-require "coffee-script"
 
 module Mado
   class App < Sinatra::Base

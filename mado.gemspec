@@ -18,16 +18,16 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "sinatra"
-  spec.add_dependency "slim"
   spec.add_dependency "coffee-script"
-  spec.add_dependency "sass"
-  spec.add_dependency "eventmachine"
   spec.add_dependency "em-websocket"
-  spec.add_dependency "thin"
+  spec.add_dependency "eventmachine"
   spec.add_dependency "github-markup"
   spec.add_dependency "redcarpet"
   spec.add_dependency "rouge"
+  spec.add_dependency "sass"
+  spec.add_dependency "sinatra"
+  spec.add_dependency "slim"
+  spec.add_dependency "thin"
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"

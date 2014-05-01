@@ -1,5 +1,5 @@
-require "eventmachine"
 require "em-websocket"
+require "eventmachine"
 
 module Mado
   class Server
