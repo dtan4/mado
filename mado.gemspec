@@ -26,7 +26,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "em-websocket"
   spec.add_dependency "thin"
   spec.add_dependency "github-markup"
-  spec.add_dependency "github-markdown"
+  spec.add_dependency "redcarpet"
+  spec.add_dependency "rouge"
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"

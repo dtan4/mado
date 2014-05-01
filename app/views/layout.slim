@@ -3,6 +3,8 @@ html
   head
     meta charset="utf-8"
     link href="/css/github.css" rel="stylesheet"
+    style type="text/css"
+      = Rouge::Themes::Github.render(scope: ".highlight")
   body
     == yield
     script src="/js/jquery-2.1.0.min.js"
