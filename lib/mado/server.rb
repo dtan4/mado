@@ -27,10 +27,6 @@ module Mado
         end
 
         app = Rack::Builder.app do
-          map "/assets" do
-            run Mado::App.sprockets
-          end
-
           map "/" do
             run Mado::App
           end
