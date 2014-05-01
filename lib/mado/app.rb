@@ -1,4 +1,5 @@
 require "coffee-script"
+require "sass"
 require "sinatra/base"
 require "slim"
 
@@ -13,6 +14,10 @@ module Mado
 
     get '/' do
       slim :index
+    end
+
+    get "/css/application.css" do
+      sass :application
     end
 
     get "/js/application.js" do
