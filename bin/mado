@@ -6,23 +6,10 @@ require "optparse"
 options = {}
 
 OptionParser.new do |opt|
-  opt.on("-p port", "Port number (default: 8080)") { |val| options[:Port] = val.to_i }
-  opt.on("-o addr", "Address to bind (default: 0.0.0.0)") { |val| options[:Host] = val }
+  opt.on("-p port", "Port number (default: 8080)") { |val| options[:port] = val.to_i }
+  opt.on("-o addr", "Address to bind (default: 0.0.0.0)") { |val| options[:host] = val }
 end.parse!(ARGV.dup)
 
-markdown_path = ARGV[-1]
+options[:markdown] = ARGV[-1]
 
-app = Rack::Builder.app do
-  map "/assets" do
-    run Mado::App.sprockets
-  end
-
-  map "/" do
-    Mado::App.set :markdown_path, markdown_path
-    run Mado::App
-  end
-end
-
-options[:app] = app
-
-Rack::Server.start(options)
+Mado::Server.run(options)

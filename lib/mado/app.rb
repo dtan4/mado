@@ -1,5 +1,4 @@
 require "sinatra/base"
-require "sinatra-websocket"
 require "slim"
 require "sprockets"
 require "sprockets-helpers"
@@ -9,7 +8,6 @@ module Mado
   class App < Sinatra::Base
     set :root, File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "app"))
     set :sprockets, Sprockets::Environment.new
-    set :sockets, []
 
     configure do
       Sprockets::Helpers.configure do |config|
@@ -33,26 +31,7 @@ module Mado
     helpers Sprockets::Helpers
 
     get '/' do
-      if !request.websocket?
-        slim :index
-      else
-        request.websocket do |ws|
-          ws.onopen do
-            ws.send settings.markdown_path.dup
-            settings.sockets << ws
-          end
-
-          ws.onmessage do |msg|
-            EM.next_tick do
-              settings.sockets.each { |s| s.send(msg) }
-            end
-          end
-
-          ws.onclose do
-            settings.sockets.delete(ws)
-          end
-        end
-      end
+      slim :index
     end
   end
 end

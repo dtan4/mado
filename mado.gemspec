@@ -19,13 +19,13 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "sinatra"
-  spec.add_dependency "sinatra-websocket"
   spec.add_dependency "slim"
   spec.add_dependency "coffee-script"
   spec.add_dependency "sass"
   spec.add_dependency "bootstrap-sass"
   spec.add_dependency "sprockets"
   spec.add_dependency "sprockets-helpers"
+  spec.add_dependency "eventmachine"
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
