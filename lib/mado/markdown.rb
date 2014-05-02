@@ -10,7 +10,8 @@ module Mado
 
     def self.convert_markdown(path)
       renderer_options = {
-                          filter_html: true
+                          filter_html: true,
+                          with_toc_data: true
                          }
       convert_options = {
                          autolink: true,
