@@ -6,6 +6,7 @@ require "slim"
 module Mado
   class App < Sinatra::Base
     set :root, File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "app"))
+    set :sass, cache: false
 
     configure :development do
       require "sinatra/reloader"
