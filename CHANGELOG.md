@@ -1,5 +1,8 @@
+## 0.0.4
+* Use Thin 1.6.x
+
 ## 0.0.3
-* Disable Sass cachex
+* Disable Sass cache
 
 ## 0.0.2
 * Refine CSS style to be more Github-ish
