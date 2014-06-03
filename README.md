@@ -1,4 +1,5 @@
 # Mado
+[![Build Status](https://travis-ci.org/dtan4/mado.svg?branch=master)](https://travis-ci.org/dtan4/mado)
 [![Gem Version](https://badge.fury.io/rb/mado.svg)](http://badge.fury.io/rb/mado)
 
 Realtime [Github Flavored Markdown](https://help.github.com/articles/github-flavored-markdown) Preview with WebSocket
