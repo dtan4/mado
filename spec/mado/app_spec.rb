@@ -36,7 +36,7 @@ module Mado
           end
 
           it "should return the specified image" do
-            get "/sample.png"
+            get "/example.png"
             expect(last_response).to be_ok
           end
         end
