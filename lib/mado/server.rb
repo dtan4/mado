@@ -28,6 +28,8 @@ module Mado
         end
 
         app = Rack::Builder.app do
+          Mado::App.set :markdown_path, markdown_path
+
           map "/" do
             run Mado::App
           end

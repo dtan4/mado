@@ -13,6 +13,12 @@ module Mado
       register Sinatra::Reloader
     end
 
+    helpers do
+      def markdown_dir
+        @markdown_dir ||= File.dirname(settings.markdown_path)
+      end
+    end
+
     get '/' do
       slim :index
     end
@@ -26,7 +32,7 @@ module Mado
     end
 
     get "/*" do
-      path = File.expand_path(params[:splat][0], Dir.pwd)
+      path = File.expand_path(params[:splat][0], markdown_dir)
 
       if File.exist?(path)
         send_file path, disposition: "inline"

@@ -16,15 +16,40 @@ module Mado
       end
     end
 
-    describe "GET /sample.png" do
+    describe "GET /<image>" do
+      let(:base_dir) do
+        fixture_path("example")
+      end
+
+      let(:other_dir) do
+        fixture_path("other")
+      end
+
       before do
-        Dir.chdir(example_dir)
+        Dir.chdir(base_dir)
       end
 
       context "with existed image" do
-        it "should return the specified image" do
-          get "/sample.png"
-          expect(last_response).to be_ok
+        context "in the same directory" do
+          before do
+            described_class.set :markdown_path, File.join(base_dir, "sample.md")
+          end
+
+          it "should return the specified image" do
+            get "/sample.png"
+            expect(last_response).to be_ok
+          end
+        end
+
+        context "in the different directory" do
+          before do
+            described_class.set :markdown_path, File.join(other_dir, "other.md")
+          end
+
+          it "should return the specified image" do
+            get "/other.png"
+            expect(last_response).to be_ok
+          end
         end
       end
 
