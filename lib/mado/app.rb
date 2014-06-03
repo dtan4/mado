@@ -24,5 +24,15 @@ module Mado
     get "/js/application.js" do
       coffee :application
     end
+
+    get "/*" do
+      path = File.expand_path(params[:splat][0], Dir.pwd)
+
+      if File.exist?(path)
+        send_file path, disposition: "inline"
+      else
+        not_found
+      end
+    end
   end
 end
