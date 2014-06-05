@@ -1,3 +1,6 @@
+## 0.1.0
+* Show local image
+
 ## 0.0.4
 * Use Thin 1.6.x
 
