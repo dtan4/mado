@@ -1,4 +1,4 @@
-# Mado
+# mado
 [![Build Status](https://travis-ci.org/dtan4/mado.svg?branch=master)](https://travis-ci.org/dtan4/mado)
 [![Gem Version](https://badge.fury.io/rb/mado.svg)](http://badge.fury.io/rb/mado)
 
@@ -40,6 +40,10 @@ $ mado -p 8080 README.md
 
 WebSocket server uses **Port 8081** in spite of `-p` option.
 Please be careful to port conflict.
+
+## Acknowledgement
+
+* [github.css](https://gist.github.com/andyferra/2554919) is used for Github-like Markdown preview.
 
 ## Contributing
 
