@@ -21,6 +21,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "coffee-script"
   spec.add_dependency "em-websocket"
   spec.add_dependency "eventmachine"
+  spec.add_dependency "gemoji"
+  spec.add_dependency "html-pipeline"
   spec.add_dependency "redcarpet"
   spec.add_dependency "rouge"
   spec.add_dependency "sass"

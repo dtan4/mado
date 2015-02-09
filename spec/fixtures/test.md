@@ -4,6 +4,7 @@ hoge
 
 - item
 - item
+- :octocat:
 
 ```ruby
 def hello

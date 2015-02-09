@@ -1,3 +1,5 @@
+require "gemoji"
+require "html/pipeline"
 require "redcarpet"
 require "rouge"
 require "rouge/plugins/redcarpet"
@@ -23,9 +25,13 @@ module Mado
           superscript: true,
           tables: true
         }
+        emoji_context = {
+          asset_root: Emoji.images_path
+        }
 
         renderer = HTML.new(renderer_options)
-        Redcarpet::Markdown.new(renderer, convert_options).render(open(path).read)
+        html = Redcarpet::Markdown.new(renderer, convert_options).render(open(path).read)
+        ::HTML::Pipeline::EmojiFilter.new(html, emoji_context).call.to_s
       end
     end
   end

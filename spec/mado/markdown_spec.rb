@@ -12,6 +12,7 @@ module Mado
       it { is_expected.to match(%r(<h1 id="header">header</h1>)) }
       it { is_expected.to match(%r(<li>item</li>)) }
       it { is_expected.to match(%r(<pre class="highlight ruby"><code>)) }
+      it { is_expected.to match(%r(<img class="emoji" title=":octocat:" .+?>)) }
     end
   end
 end
