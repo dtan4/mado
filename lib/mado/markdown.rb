@@ -8,22 +8,25 @@ module Mado
       include Rouge::Plugins::Redcarpet
     end
 
-    def self.convert_markdown(path)
-      renderer_options = {
-                          filter_html: true,
-                          with_toc_data: true
-                         }
-      convert_options = {
-                         autolink: true,
-                         fenced_code_blocks: true,
-                         lax_spacing: true,
-                         no_intra_emphasis: true,
-                         strikethrough: true,
-                         superscript: true,
-                         tables: true
-                        }
-      renderer = HTML.new(renderer_options)
-      Redcarpet::Markdown.new(renderer, convert_options).render(open(path).read)
+    class << self
+      def convert_markdown(path)
+        renderer_options = {
+          filter_html: true,
+          with_toc_data: true
+        }
+        convert_options = {
+          autolink: true,
+          fenced_code_blocks: true,
+          lax_spacing: true,
+          no_intra_emphasis: true,
+          strikethrough: true,
+          superscript: true,
+          tables: true
+        }
+
+        renderer = HTML.new(renderer_options)
+        Redcarpet::Markdown.new(renderer, convert_options).render(open(path).read)
+      end
     end
   end
 end
