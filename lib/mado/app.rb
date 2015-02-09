@@ -1,8 +1,3 @@
-require "coffee-script"
-require "sass"
-require "sinatra/base"
-require "slim"
-
 module Mado
   class App < Sinatra::Base
     set :root, File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "app"))
@@ -29,6 +24,16 @@ module Mado
 
     get "/js/application.js" do
       coffee :application
+    end
+
+    get "/emoji/*" do
+      emoji_path = Mado::Markdown.emoji_path(params[:splat][0])
+
+      if File.exist?(emoji_path)
+        send_file emoji_path, disposition: "inline"
+      else
+        not_found
+      end
     end
 
     get "/*" do

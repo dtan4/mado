@@ -1,6 +1,3 @@
-require "em-websocket"
-require "eventmachine"
-
 module Mado
   class Server
     def self.run(options)
