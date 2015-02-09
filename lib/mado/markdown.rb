@@ -20,7 +20,7 @@ module Mado
           tables: true
         }
         emoji_context = {
-          asset_root: "emoji"
+          asset_root: ""
         }
 
         renderer = HTML.new(renderer_options)
@@ -29,7 +29,7 @@ module Mado
       end
 
       def emoji_path(file_path)
-        File.expand_path(file_path, Emoji.images_path)
+        File.join(Emoji.images_path, "emoji", file_path)
       end
     end
   end

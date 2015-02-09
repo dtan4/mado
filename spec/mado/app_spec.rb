@@ -60,5 +60,25 @@ module Mado
         end
       end
     end
+
+    describe "GET /emoji/*" do
+      let(:emoji_name) do
+        "octocat.png"
+      end
+
+      context "when given emoji exists" do
+        it "should return the image of given emoji" do
+          get "/emoji/#{emoji_name}"
+          expect(last_response).to be_ok
+        end
+      end
+
+      context "when given emoji does not exist" do
+        it "should return 404" do
+          get "/emoji/#{emoji_name}.notfound"
+          expect(last_response).to be_not_found
+        end
+      end
+    end
   end
 end
