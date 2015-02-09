@@ -1,8 +1,3 @@
-require "html/pipeline"
-require "redcarpet"
-require "rouge"
-require "rouge/plugins/redcarpet"
-
 module Mado
   class Markdown
     class HTML < Redcarpet::Render::HTML

@@ -1,5 +1,3 @@
-require "eventmachine"
-
 module Mado
   class FileHandler < EventMachine::FileWatch
     def initialize(sockets)

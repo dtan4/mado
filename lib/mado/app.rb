@@ -1,8 +1,3 @@
-require "coffee-script"
-require "sass"
-require "sinatra/base"
-require "slim"
-
 module Mado
   class App < Sinatra::Base
     set :root, File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "app"))
