@@ -1,4 +1,3 @@
-require "gemoji"
 require "html/pipeline"
 require "redcarpet"
 require "rouge"
@@ -26,7 +25,7 @@ module Mado
           tables: true
         }
         emoji_context = {
-          asset_root: Emoji.images_path
+          asset_root: "emoji"
         }
 
         renderer = HTML.new(renderer_options)

@@ -31,6 +31,11 @@ module Mado
       coffee :application
     end
 
+    get "/emoji/*" do
+      emoji_path = File.expand_path(params[:splat][0], Emoji.images_path)
+      send_file emoji_path, disposition: "inline"
+    end
+
     get "/*" do
       path = File.expand_path(params[:splat][0], markdown_dir)
 

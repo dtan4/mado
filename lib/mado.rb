@@ -1,3 +1,5 @@
+require "gemoji"
+
 require "mado/version"
 require "mado/app"
 require "mado/file_handler"
