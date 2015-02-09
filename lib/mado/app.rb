@@ -27,7 +27,7 @@ module Mado
     end
 
     get "/emoji/*" do
-      emoji_path = File.expand_path(params[:splat][0], Emoji.images_path)
+      emoji_path = Mado::Markdown.emoji_path(params[:splat][0])
       send_file emoji_path, disposition: "inline"
     end
 
