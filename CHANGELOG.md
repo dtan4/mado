@@ -1,3 +1,7 @@
+## 0.1.1
+* Update CSS to be more similar to GitHub
+* Run Sinatra application in production environment to avoid loading sinatra-reloader
+
 ## 0.1.0
 * Show local image
 
