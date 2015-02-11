@@ -9,6 +9,7 @@ require "rouge/plugins/redcarpet"
 require "sass"
 require "sinatra/base"
 require "slim"
+require "task_list/filter"
 
 require "mado/version"
 require "mado/app"

@@ -19,13 +19,17 @@ module Mado
           superscript: true,
           tables: true
         }
-        emoji_context = {
+        pipeline_context = {
           asset_root: ""
         }
+        pipeline = ::HTML::Pipeline.new [
+          ::HTML::Pipeline::EmojiFilter,
+          TaskList::Filter
+        ]
 
         renderer = HTML.new(renderer_options)
         html = Redcarpet::Markdown.new(renderer, convert_options).render(open(path).read)
-        ::HTML::Pipeline::EmojiFilter.new(html, emoji_context).call.to_s
+        pipeline.call(html, pipeline_context)[:output].to_s
       end
 
       def emoji_path(file_path)
