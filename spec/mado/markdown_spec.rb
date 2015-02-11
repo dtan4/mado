@@ -13,6 +13,7 @@ module Mado
       it { is_expected.to match(%r(<li>item</li>)) }
       it { is_expected.to match(%r(<pre class="highlight ruby"><code>)) }
       it { is_expected.to match(%r(<img class="emoji" .+?src="/emoji/.+?">)) }
+      it { is_expected.to match(%r(<input [^<>]*type="checkbox"[^<>]*>)) }
     end
 
     describe ".emoji_path" do

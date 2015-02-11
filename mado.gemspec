@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "sass"
   spec.add_dependency "sinatra"
   spec.add_dependency "slim"
+  spec.add_dependency "task_list"
   spec.add_dependency "thin", "~> 1.6"
 
   spec.add_development_dependency "bundler", "~> 1.6"
