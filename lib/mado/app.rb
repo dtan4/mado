@@ -15,6 +15,7 @@ module Mado
     end
 
     get '/' do
+      @page_title = File.basename(settings.markdown_path)
       slim :index
     end
 

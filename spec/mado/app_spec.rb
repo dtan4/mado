@@ -10,9 +10,18 @@ module Mado
     end
 
     describe "GET /" do
+      before do
+        app.set :markdown_path, fixture_path("test.md")
+      end
+
       it "should show the root page" do
         get "/"
         expect(last_response).to be_ok
+      end
+
+      it "should contain markdown name as page title" do
+        get "/"
+        expect(last_response.body).to match(%r(<title>test\.md<\/title>))
       end
     end
 
