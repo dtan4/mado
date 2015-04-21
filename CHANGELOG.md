@@ -1,3 +1,6 @@
+## 0.2.1
+* Show Markdown file name at page title
+
 ## 0.2.0
 * Render Emoji :octocat:
 * Render GitHub-like tasklist
